@@ -50,13 +50,25 @@ This section defines the general structure of the *Model* object defined in a `m
         * *required* : the source data *must* provide this data field
     * __requested__ : the source data provider is invited to provide the data that will appear in this field
     * __required__ : the source data provider *must* provide the data that will appear in this field
-    * __analogs__ : a list of field name patterns that may be found in source data to hold data appropriate for this field
-* __target__ : contracts with the target data consumer and advice to `Mother` to be used during processing
+    * __analogs__ : a list of field name patterns that may be found in source data to hold data appropriate for this field.  
+   
+    [//]: # 
+    (@patdaburu this is my first attempt at editing in Markdown so we'll see how this goes.  Most of my stuff are questions rather than updates so attempting to use comments in markdown seem appropriate.  side note, commenting seems complicated and breaks with line breaks.  Here seeking clarification on the definition of an analog and use:)
+    [//]: # 
+  (Are analogs the things that we will try to do smart naming associations that you mentioned in our meeting?  Analogs here are listed as part of the source data.  I think its probably contained within the target because our target is known and based on NENA while customer data is always unknown?  See example below to hopefully illustrate questions)  
+     [//]: # 
+    (Example: 1. a customer source layer is called 'StearnsCountyRoads'2. we put `roads` as an ````_analog_```` in the target model for the roads centerline feature class. 3. when run, 'StearnsCountyRoads' would be associated with the roads centerline feature class due to containing the analog? Secondarily, What type of association/searching is used under the covers?  I would assume we'd want it to be overly suggestive rather than under, and assume a user would need to preview/confirm this association later via a GUI due to the criticality of making sure we know what their data is)
+
+    * __target__ : contracts with the target data consumer and advice to `Mother` to be used during processing
     * __calculated__ : the value in this field is calculated
     * __guaranteed__ : this field is guaranteed to have a non-empty value
 * __usage__ : indicates how the data in this field is intended to be used
     * __search__ : the data in this field may be used to find a row
     * __display__ : the data in this field may be used to display information about a row
+
+[//]: # 
+(Seems we should clarify search and display more.  I'm assuming these fields are for mapping but am unsure of their impact to GDH as we don't search or display data currently... unless you are referring for example that a source unique Id field might be ''''searched'''' to find other relevant data?)
+
 * __nena__ : [NENA specification](<http://c.ymcdn.com/sites/www.nena.org/resource/collection/C74A8084-E3BD-405D-93C2-48AFCFA5B490/NENA_02-014-v1_GIS_Data_Collection_and_Maintenance.pdf>) information as defined by a [nena](#nena) object.
 * __i18n__ : internationalized label information; each supported language is identified by its ISO code and defined by an [i18n](#i18n) object.
 
@@ -64,9 +76,15 @@ This section defines the general structure of the *Model* object defined in a `m
 
 *Featureclasses* objects define collections of spatial objects that share a common geometry type and common attribution.
 
+[//]: # 
+(@patdaburu Is featureclass an ESRI word?  I hate the name feature class because its meaningless to me.  a layer, to me, has more resonance because I can envision layers of different data in the form of tables being stacked on top of each other to build something, like a map or a cake.  A feature is generic business word for new functionality... a class is a generic technical word meaning something like a set of data being treated in a certain way e.g. with functions.  Putting them together in painful)     
+
 * __name__ : the *actual* name of the featureclass as it appears in a `Mother` database
 * __identity__ : the name of the field that contains the identity value for each feature
     *When no identity field is specified, the default identity defined for the format may be assumed.*
+[//]: #
+(@patdaburu by this you mean take the source data and determine what format it was originally maintained in?  Seems complicated/risky in that we are inferring an unknown format.  Perhaps I'm wrong?) 
+
 * __geometryType__ : the type of the geometry contained in the featureclass
     * *Point* : a point geometry
     * *Polyline* : a polyline geometry
@@ -83,6 +101,9 @@ This section defines the general structure of the *Model* object defined in a `m
     * __analog__ : the analogous NENA field or table name
     * __required__ : indicates whether or not the NENA specification requires this field to contain a non-empty value
     
+[//]: #
+(@patdaburu I'm curious how you'd think of using this NENA designation.  Right now, 'NENA' in GDH means nothing in that it isn't used for processing data.  Its simply a UI flag to say it required to inform the customer.  Its relevant from a marketing/sales/customer perspective to indicate on a UI if something relates to NENA but from a practical perspective.  In the case of our ECRF integration e.g. the SI feed, we actually imported a NENA-defined export schema so we could guarantee we are following that standard)   
+
 ### I18n
 
 *I18n* objects provide human-readable descriptions of other objects in the various supported languages.
